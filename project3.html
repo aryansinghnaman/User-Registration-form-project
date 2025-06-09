@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>VaultofCodes - Interactive User Registration Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #8e2de2, #4a00e0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            animation: fadeInBody 1s ease-in;
+        }
+
+        @keyframes fadeInBody {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            animation: fadeInForm 1s ease-in;
+        }
+
+        @keyframes fadeInForm {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            margin-right: 10px;
+        }
+
+        .header h1 {
+            font-size: 1.4rem;
+            color: #333;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #8e2de2;
+            outline: none;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 14px;
+            left: 12px;
+            font-size: 1rem;
+            color: #777;
+            background-color: #fff;
+            padding: 0 4px;
+            transition: 0.2s ease all;
+            pointer-events: none;
+        }
+
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label,
+        .form-group select:focus + label,
+        .form-group select:not([value=""]) + label {
+            top: -8px;
+            left: 10px;
+            font-size: 0.75rem;
+            color: #8e2de2;
+        }
+
+        .terms {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .terms input {
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #8e2de2;
+            color: #fff;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease, opacity 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+            opacity: 0.6;
+        }
+
+        .submit-btn.enabled {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .submit-btn.enabled:hover {
+            background: #4a00e0;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 12px;
+            margin-top: 15px;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            animation: fadeInSuccess 0.8s ease-in;
+            text-align: center;
+        }
+
+        @keyframes fadeInSuccess {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.1rem;
+            }
+
+            .header img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="header">
+            <!-- Using assets folder -->
+            <img src="assets/unnamed.png" alt="VaultofCodes Logo" />
+            <h1>Interactive User Registration Form</h1>
+        </div>
+        <form id="registrationForm" autocomplete="off">
+            <div class="form-group">
+                <input type="text" id="firstname" name="firstname" required placeholder=" " />
+                <label for="firstname">First Name</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="lastname" name="lastname" required placeholder=" " />
+                <label for="lastname">Last Name</label>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" name="email" required placeholder=" " />
+                <label for="email">Email Address</label>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" required minlength="6" placeholder=" " />
+                <label for="password">Password</label>
+            </div>
+            <div class="form-group">
+                <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6" placeholder=" " />
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="error-message" id="passwordError">Passwords do not match!</div>
+            </div>
+            <div class="form-group">
+                <input type="date" id="dob" name="dob" required placeholder=" " />
+                <label for="dob">Date of Birth</label>
+            </div>
+            <div class="form-group">
+                <select id="gender" name="gender" required>
+                    <option value="" disabled selected></option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                    <option value="prefer_not_to_say">Prefer not to say</option>
+                </select>
+                <label for="gender">Gender</label>
+            </div>
+            <div class="form-group terms">
+                <input type="checkbox" id="terms" />
+                <label for="terms">I agree to the Terms and Conditions</label>
+            </div>
+            <button type="submit" class="submit-btn" id="registerButton" disabled>Register</button>
+            <div class="success-message" id="successMessage">Registration Successful! 🎉</div>
+        </form>
+    </div>
+
+    <script>
+        const termsCheckbox = document.getElementById('terms');
+        const registerButton = document.getElementById('registerButton');
+        const passwordField = document.getElementById('password');
+        const confirmPasswordField = document.getElementById('confirmPassword');
+        const passwordError = document.getElementById('passwordError');
+        const successMessage = document.getElementById('successMessage');
+        const registrationForm = document.getElementById('registrationForm');
+
+        termsCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                registerButton.disabled = false;
+                registerButton.classList.add('enabled');
+            } else {
+                registerButton.disabled = true;
+                registerButton.classList.remove('enabled');
+            }
+        });
+
+        confirmPasswordField.addEventListener('input', function() {
+            if (passwordField.value !== confirmPasswordField.value) {
+                passwordError.style.display = 'block';
+            } else {
+                passwordError.style.display = 'none';
+            }
+        });
+
+        registrationForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            if (passwordField.value !== confirmPasswordField.value) {
+                passwordError.style.display = 'block';
+                return;
+            }
+
+            successMessage.style.display = 'block';
+            registrationForm.reset();
+            registerButton.disabled = true;
+            registerButton.classList.remove('enabled');
+        });
+    </script>
+</body>
+</html>
+
